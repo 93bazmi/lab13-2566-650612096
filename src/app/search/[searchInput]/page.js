@@ -14,24 +14,31 @@ export default function SearchResultPage({ params }) {
 
   tip3 : To implement case insensitive searching, use "toLocaleLowerCase" string method
   to convert movie title and searchInput to lower case 
-  const filteredMovies = movieDB.filter((movie) =>
-    you code here...
-  );
   */
-  //ค้นหา แต่ยังค้นพิมใหญ่ด้วยพิมเล็กไม่ได้
   const filteredMovies = movieDB.filter((movie) =>
-    movie.title.toLocaleLowerCase().includes(processedSearchInput)
+    movie.title.toLocaleLowerCase().includes(processedSearchInput.toLowerCase())
   );
   //toLocaleLowerCase() or toLowerCase() เปลี่ยน processedSearchInput เป็นพิมเล็ก
-  console.log(filteredMovies);
 
   return (
     <div>
       <p className="fw-bold fs-4 text-center my-0">
-        Searching &quot; ... &quot;
+        Searching &quot; {processedSearchInput} &quot;
       </p>
-      <p className="fw-bold fs-4 text-center">Found ... result(s)</p>
+      <p className="fw-bold fs-4 text-center">
+        Found {filteredMovies.length} result(s)
+      </p>
       {/* Use  "filteredMovies" variable to map-loop rendering MovieRow component */}
+      {filteredMovies.map((movie, i) => (
+        <MovieRow
+          key={movie.id}
+          id={movie.id}
+          title={movie.title}
+          detail={movie.detail}
+          rating={movie.rating}
+          number={i + 1}
+        />
+      ))}
     </div>
   );
 }
